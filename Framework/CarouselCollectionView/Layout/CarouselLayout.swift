@@ -14,9 +14,10 @@ public protocol CarouselLayout {
     var padding: CGFloat { get }
     
     // Builder functions
-    func itemSize(_ size: CGSize) -> CarouselLayout
+    func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout
     func padding(_ padding: CGFloat) -> CarouselLayout
     
     // Layout methods
     func calculatePosition(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGPoint
+    func calculateSize(atPosition position: CGPoint, inFrame frame: CGRect) -> CGSize
 }

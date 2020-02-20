@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-public struct CarouselCollectionView<T: View>: View {
+public struct CarouselCollectionView<ItemView: View>: View {
     // Data
-    let items: [T]
+    let items: [ItemView]
     let layout: CarouselLayout
     
     // State
@@ -19,7 +19,7 @@ public struct CarouselCollectionView<T: View>: View {
     
     //MARK: Initialization
     
-    public init(layout: CarouselLayout, items:[T]) {
+    public init(layout: CarouselLayout, items:[ItemView]) {
         self.items = items
         self.layout = layout
     }
@@ -29,13 +29,7 @@ public struct CarouselCollectionView<T: View>: View {
     public var body: some View {
         GeometryReader { geometry in
             ForEach(0..<self.items.count) { index in
-                self.items[index]
-                    .padding(self.layout.padding)
-                    .position(self.calculatePosition(forItemAtIndex: index, inFrame: geometry.frame(in: .global)))
-                    .frame(width: self.layout.itemSize.width, height: self.layout.itemSize.height)
-                    .onTapGesture {
-                        self.selectedIndex = index
-                }
+                self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
             }.animation(.easeInOut(duration: 0.25))
                 .gesture(
                     DragGesture()
@@ -63,6 +57,19 @@ public struct CarouselCollectionView<T: View>: View {
     
     
     //MARK: Private helpers
+    
+    func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {
+        let position = layout.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
+        let itemSize = layout.calculateSize(atPosition: position, inFrame: frame)
+        
+        return self.items[index]
+            .padding(self.layout.padding)
+            .position(position)
+            .frame(width: itemSize.width, height: itemSize.height)
+            .onTapGesture {
+                self.selectedIndex = index
+        }
+    }
     
     func calculatePosition(forItemAtIndex index:Int, inFrame frame: CGRect) -> CGPoint {
         return layout.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
