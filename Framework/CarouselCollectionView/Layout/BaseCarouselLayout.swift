@@ -12,13 +12,13 @@ class BaseCarouselLayout: CarouselLayout {
     var itemSize: CGSize = .zero
     var padding: CGFloat = 0
     
-    func set(itemSize: CGSize) -> CarouselLayout {
+    func itemSize(_ itemSize: CGSize) -> CarouselLayout {
         self.itemSize = itemSize
         
         return self
     }
     
-    func set(padding: CGFloat) -> CarouselLayout {
+    func padding(_ padding: CGFloat) -> CarouselLayout {
         self.padding = padding
         
         return self

@@ -15,7 +15,7 @@ struct ContentView: View {
     let items: [CarouselItemView]
     
     init() {
-        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).set(itemSize: CGSize(width: 125, height: 150)).set(padding: 5)
+        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(CGSize(width: 125, height: 150)).padding(5)
         self.items = [CarouselItemView(title: "1", color: .red),
                       CarouselItemView(title: "2", color: .green),
                       CarouselItemView(title: "3", color: .blue),
