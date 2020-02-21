@@ -37,10 +37,10 @@ public struct CarouselCollectionView<ItemView: View>: View {
                             // Update drag offset
                             self.dragOffset = value.translation.width
                     }
-                    .onEnded { _ in
+                    .onEnded { value in
                         // Calculate selected index
-                        var nextIndex = self.selectedIndex - Int(self.dragOffset / self.layout.itemSize.width)
-                        
+                        var nextIndex = self.selectedIndex - Int(value.predictedEndTranslation.width / self.layout.itemSize.width)
+                                                
                         // Check and fix if it is out of bounds
                         nextIndex = max(nextIndex, 0)
                         nextIndex = min(nextIndex, self.items.count - 1)

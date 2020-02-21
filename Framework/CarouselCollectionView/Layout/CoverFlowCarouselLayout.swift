@@ -28,8 +28,15 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     }
     
     override func calculateSize(atPosition position: CGPoint, inFrame frame: CGRect) -> CGSize {
-        let scaleFactor = 1.0 - abs(frame.midX - position.x) * (1 - Constants.minimumScaleFactor) / frame.midX
-                
+        var scaleFactor: CGFloat
+        if frame.contains(position) {
+            // Calculate scale factor for visible items
+            scaleFactor = 1.0 - abs(frame.midX - position.x) * (1 - Constants.minimumScaleFactor) / frame.midX
+        } else {
+            // Default scale factor for invisible items
+            scaleFactor = Constants.minimumScaleFactor
+        }
+        
         return CGSize(width: itemSize.width * scaleFactor, height: itemSize.height * scaleFactor)
     }
 }

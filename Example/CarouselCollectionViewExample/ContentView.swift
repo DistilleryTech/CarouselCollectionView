@@ -25,16 +25,13 @@ struct ContentView: View {
     
     init() {
         self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
-        self.items = [CarouselItemView(title: "1", color: .red),
-                      CarouselItemView(title: "2", color: .green),
-                      CarouselItemView(title: "3", color: .blue),
-                      CarouselItemView(title: "4", color: .gray),
-                      CarouselItemView(title: "5", color: .cyan),
-                      CarouselItemView(title: "6", color: .yellow),
-                      CarouselItemView(title: "7", color: .magenta),
-                      CarouselItemView(title: "8", color: .orange),
-                      CarouselItemView(title: "9", color: .brown),
-                      CarouselItemView(title: "10", color: .purple)]
+        
+        var items = [CarouselItemView]()
+        for index in 0..<100 {
+            items.append(CarouselItemView(title: "\(index)", color: UIColor.randomColor))
+        }
+        
+        self.items = items
     }
     
     //MARK: View
