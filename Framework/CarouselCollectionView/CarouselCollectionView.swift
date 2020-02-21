@@ -30,7 +30,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
         GeometryReader { geometry in
             ForEach(0..<self.items.count) { index in
                 self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
-            }.animation(.easeInOut(duration: 0.25))
+            }.animation(.easeInOut(duration: 0.5))
                 .gesture(
                     DragGesture()
                         .onChanged { value in
@@ -59,19 +59,14 @@ public struct CarouselCollectionView<ItemView: View>: View {
     //MARK: Private helpers
     
     func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {
-        let position = layout.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
-        let itemSize = layout.calculateSize(atPosition: position, inFrame: frame)
+        let frame = layout.calculateFrame(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
         
         return self.items[index]
             .padding(self.layout.padding)
-            .position(position)
-            .frame(width: itemSize.width, height: itemSize.height)
+            .offset(x: frame.minX, y: frame.minY)
+            .frame(width: frame.size.width, height: frame.size.height)
             .onTapGesture {
                 self.selectedIndex = index
         }
-    }
-    
-    func calculatePosition(forItemAtIndex index:Int, inFrame frame: CGRect) -> CGPoint {
-        return layout.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
     }
 }

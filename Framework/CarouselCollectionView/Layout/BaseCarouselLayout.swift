@@ -6,11 +6,12 @@
 //  Copyright © 2020 Distillery. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class BaseCarouselLayout: CarouselLayout {
     var itemSize: CGSize = .zero
     var padding: CGFloat = 0
+    var verticalAlignment: VerticalAlignment = .center
     
     func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout {
         itemSize = CGSize(width: width, height: height)
@@ -24,11 +25,13 @@ class BaseCarouselLayout: CarouselLayout {
         return self
     }
     
-    func calculatePosition(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGPoint {
-        return .zero
+    func verticalAlignment(_ verticalAlignment: VerticalAlignment) -> CarouselLayout {
+        self.verticalAlignment = verticalAlignment
+        
+        return self
     }
     
-    func calculateSize(atPosition position: CGPoint, inFrame frame: CGRect) -> CGSize {
-        return itemSize
+    func calculateFrame(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect {
+        return .zero
     }
 }
