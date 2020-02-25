@@ -21,6 +21,9 @@ struct ContentView: View {
     let layout: CarouselLayout
     let items: [CarouselItemView]
     
+    // State
+    @State var selectedIndex = 0
+    
     //MARK: Initialization
     
     init() {
@@ -39,7 +42,12 @@ struct ContentView: View {
     //MARK: View
     
     var body: some View {
-        CarouselCollectionView(layout: layout, items: items)
+        VStack {
+            Text("Selected Item:")
+            Text(String(selectedIndex))
+                .font(.system(size: 36, weight: .heavy, design: .default))
+            CarouselCollectionView(layout: layout, items: items, selectedIndex: $selectedIndex)
+        }
     }
 }
 

@@ -13,15 +13,19 @@ public struct CarouselCollectionView<ItemView: View>: View {
     let items: [ItemView]
     let layout: CarouselLayout
     
+    // Binding
+    @Binding var selectedIndex: Int
+    
     // State
     @State private var dragOffset: CGFloat = 0
-    @State private var selectedIndex: Int = 0
     
     //MARK: Initialization
     
-    public init(layout: CarouselLayout, items:[ItemView]) {
+    public init(layout: CarouselLayout, items:[ItemView], selectedIndex: Binding<Int>) {
         self.items = items
         self.layout = layout
+        
+        self._selectedIndex = selectedIndex
     }
     
     //MARK: View
