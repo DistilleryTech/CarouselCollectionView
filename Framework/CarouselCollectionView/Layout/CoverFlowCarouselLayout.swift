@@ -6,13 +6,14 @@
 //  Copyright © 2020 Distillery. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class CoverFlowCarouselLayout: BaseCarouselLayout {
     //MARK: Constants
     
     private enum Constants {
         static let minimumScaleFactor: CGFloat = 0.8
+        static let rotationAngle: Double = 30
     }
     
     //MARK: Override
@@ -21,17 +22,52 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
         // Calculate position
         let position = self.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
         
-        // Calculate scale
-        let scale = self.calculateSize(atPosition: position, inFrame: parentFrame)
-        
-        // Calculate frame with vertical offset
-        let frame = CGRect(x: position.x - scale.width / 2,
-                           y: self.calculateVerticalOffset(position: position, scale: scale),
-                           width: scale.width,
-                           height: scale.height)
+        let frame = CGRect(x: position.x - itemSize.width / 2,
+                           y: position.y - itemSize.height / 2,
+                           width: itemSize.width,
+                           height: itemSize.height)
         
         return frame
     }
+    
+    override func rotation3DEffect(forItemAtIndex index: Int, selectedIndex: Int, position: CGPoint, inFrame frame: CGRect, dragOffset: CGFloat) -> (angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat)) {
+        
+        let itemOffset = index - selectedIndex
+        
+        var offset = dragOffset
+        if abs(offset) > itemSize.width {
+            if offset < 0 {
+                offset = offset + itemSize.width
+            } else {
+                offset = offset - itemSize.width
+            }
+        }
+                    
+        var angle: Double = 0.0
+        let offsetAngle = Double((Double(offset) * Constants.rotationAngle) / Double(itemSize.width))
+                
+        if itemOffset < -1 || position.x <= (frame.width / 2 - itemSize.width) {
+            angle = Constants.rotationAngle
+        } else if itemOffset > 1 || position.x >= (frame.width / 2 + itemSize.width) {
+            angle = -Constants.rotationAngle
+        } else {
+            if position.x < frame.width / 2 {
+                angle = (offset > 0 ? (Constants.rotationAngle - offsetAngle) : -offsetAngle)
+                
+            } else if position.x > frame.width / 2 {
+                angle = (offset > 0 ? -offsetAngle : (-Constants.rotationAngle - offsetAngle))
+            }
+        }
+                        
+        return (angle: .degrees(angle), axis: (x: 0, y: 1, z: 0))
+    }
+    
+    override func zIndex(forItemAtIndex index: Int, selectedIndex: Int) -> Double {
+        let itemOffset = Double(index - selectedIndex)
+        
+        return -itemOffset
+    }
+    
     
     //MARK: Private helpers
     
@@ -43,31 +79,5 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
         let scrollOffset = (parentFrame.width / 2) + (itemOffset * itemSize.width) + dragOffset
         
         return CGPoint(x: scrollOffset, y: parentFrame.height / 2)
-    }
-    
-    func calculateSize(atPosition position: CGPoint, inFrame frame: CGRect) -> CGSize {
-        var scaleFactor: CGFloat
-        if frame.contains(position) {
-            // Calculate scale factor for visible items
-            scaleFactor = 1.0 - abs(frame.midX - position.x) * (1 - Constants.minimumScaleFactor) / frame.midX
-        } else {
-            // Default scale factor for invisible items
-            scaleFactor = Constants.minimumScaleFactor
-        }
-        
-        return CGSize(width: itemSize.width * scaleFactor, height: itemSize.height * scaleFactor)
-    }
-    
-    func calculateVerticalOffset(position:CGPoint, scale: CGSize) -> CGFloat {
-        var offset = position.y - scale.height / 2
-        
-        let diff = itemSize.height - scale.height
-        if self.verticalAlignment == .bottom {
-            offset += (diff / 2)
-        } else if self.verticalAlignment == .top {
-            offset -= (diff / 2)
-        }
-        
-        return offset
     }
 }

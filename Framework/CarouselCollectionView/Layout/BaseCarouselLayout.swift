@@ -10,8 +10,6 @@ import SwiftUI
 
 class BaseCarouselLayout: CarouselLayout {
     var itemSize: CGSize = .zero
-    var padding: CGFloat = 0
-    var verticalAlignment: VerticalAlignment = .center
     
     func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout {
         itemSize = CGSize(width: width, height: height)
@@ -19,19 +17,15 @@ class BaseCarouselLayout: CarouselLayout {
         return self
     }
     
-    func padding(_ padding: CGFloat) -> CarouselLayout {
-        self.padding = padding
-        
-        return self
-    }
-    
-    func verticalAlignment(_ verticalAlignment: VerticalAlignment) -> CarouselLayout {
-        self.verticalAlignment = verticalAlignment
-        
-        return self
-    }
-    
     func calculateFrame(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect {
         return .zero
+    }
+    
+    func rotation3DEffect(forItemAtIndex: Int, selectedIndex: Int, position: CGPoint, inFrame: CGRect, dragOffset: CGFloat) -> (angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat)) {
+        return (angle: .degrees(0), axis: (x: 0, y: 0, z: 0))
+    }
+    
+    func zIndex(forItemAtIndex: Int, selectedIndex: Int) -> Double {
+        return 0
     }
 }

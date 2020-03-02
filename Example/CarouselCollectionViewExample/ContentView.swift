@@ -13,7 +13,7 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemSize = CGSize(width: 175, height: 200)
+        static let itemSize = CGSize(width: 150, height: 200)
     }
     
     //MARK: Properties
@@ -27,15 +27,12 @@ struct ContentView: View {
     //MARK: Initialization
     
     init() {
-        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow)
-            .itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
-            .verticalAlignment(.bottom)
+        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
         
         var items = [CarouselItemView]()
         for index in 0..<100 {
             items.append(CarouselItemView(title: "\(index)", color: UIColor.randomColor))
         }
-        
         self.items = items
     }
     

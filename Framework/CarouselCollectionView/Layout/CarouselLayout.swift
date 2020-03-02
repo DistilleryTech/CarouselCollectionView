@@ -11,14 +11,12 @@ import SwiftUI
 public protocol CarouselLayout {
     // Configuration
     var itemSize: CGSize { get }
-    var padding: CGFloat { get }
-    var verticalAlignment: VerticalAlignment { get }
     
     // Builder functions
     func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout
-    func padding(_ padding: CGFloat) -> CarouselLayout
-    func verticalAlignment(_ alignment: VerticalAlignment) -> CarouselLayout
     
     // Layout methods
-    func calculateFrame(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect
+    func calculateFrame(forItemAtIndex: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect
+    func rotation3DEffect(forItemAtIndex: Int, selectedIndex: Int, position: CGPoint, inFrame: CGRect, dragOffset: CGFloat) -> (angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat))
+    func zIndex(forItemAtIndex: Int, selectedIndex: Int) -> Double
 }
