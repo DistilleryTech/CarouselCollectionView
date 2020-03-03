@@ -34,15 +34,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
         ZStack{
             GeometryReader { geometry in
                 ForEach(0..<self.items.count) { index in
-                    ZStack {
-                        self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
-//                        ZStack {
-//                        self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
-//                            .rotationEffect(.degrees(180), anchor: .center)
-//                            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-//                            .offset(y: 700)
-//                        }
-                    }
+                    self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
                 }.animation(.easeInOut(duration: 0.5))
                     .gesture(
                         DragGesture()

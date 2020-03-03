@@ -13,7 +13,7 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemSize = CGSize(width: 150, height: 200)
+        static let itemSize = CGSize(width: 175, height: 200)
     }
     
     //MARK: Properties
