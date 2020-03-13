@@ -14,70 +14,57 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     private enum Constants {
         static let minimumScaleFactor: CGFloat = 0.8
         static let rotationAngle: Double = 30
+        static let translatePerspective: CGFloat = -1.0 / 500.0
     }
     
     //MARK: Override
     
-    override func calculateFrame(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect {
-        // Calculate position
-        let position = self.calculatePosition(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
+    override func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
+        // calculate frame
+        let frame: CGRect = calculateFrame(atIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
         
-        let frame = CGRect(x: position.x - itemSize.width / 2,
-                           y: position.y - itemSize.height / 2,
-                           width: itemSize.width,
-                           height: itemSize.height)
+        // calculate zindex
+        let zIndex: Double = 100 - Double(abs(index - selectedIndex))
         
-        return frame
+        // calculate transform
+        let itemOffset = frame.midX - parentFrame.midX
+        let transform = createProjectionTransform(withOffset: itemOffset)
+        
+        return GeometryAttributes(frame: frame, zIndex: zIndex, transform: transform)
     }
     
-    override func rotation3DEffect(forItemAtIndex index: Int, selectedIndex: Int, position: CGPoint, inFrame frame: CGRect, dragOffset: CGFloat) -> (angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat)) {
-        
+    
+    //MARK: Private
+    
+    func calculateFrame(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> CGRect {
         let itemOffset = index - selectedIndex
         
-        var offset = dragOffset
-        if abs(offset) > itemSize.width {
-            if offset < 0 {
-                offset = offset + itemSize.width
-            } else {
-                offset = offset - itemSize.width
-            }
-        }
-                    
-        var angle: Double = 0.0
-        let offsetAngle = Double((Double(offset) * Constants.rotationAngle) / Double(itemSize.width))
-                
-        if itemOffset < -1 || position.x <= (frame.width / 2 - itemSize.width) {
-            angle = Constants.rotationAngle
-        } else if itemOffset > 1 || position.x >= (frame.width / 2 + itemSize.width) {
+        let scrollOffset = (parentFrame.width / 2) + (CGFloat(itemOffset) * itemSize.width) + dragOffset.x
+        
+        return CGRect(x: scrollOffset - itemSize.width / 2,
+                      y: parentFrame.height / 2 - itemSize.height / 2,
+                      width: itemSize.width,
+                      height: itemSize.height)
+    }
+    
+    func createProjectionTransform(withOffset offset: CGFloat) -> ProjectionTransform {
+        var angle: Double = 0
+        if offset >= itemSize.width {
             angle = -Constants.rotationAngle
+        } else if offset <= -itemSize.width {
+            angle = Constants.rotationAngle
         } else {
-            if position.x < frame.width / 2 {
-                angle = (offset > 0 ? (Constants.rotationAngle - offsetAngle) : -offsetAngle)
-                
-            } else if position.x > frame.width / 2 {
-                angle = (offset > 0 ? -offsetAngle : (-Constants.rotationAngle - offsetAngle))
-            }
+            angle = Double(-(offset * CGFloat(Constants.rotationAngle)) / itemSize.width)
         }
                         
-        return (angle: .degrees(angle), axis: (x: 0, y: 1, z: 0))
-    }
-    
-    override func zIndex(forItemAtIndex index: Int, selectedIndex: Int) -> Double {
-        let itemOffset = Double(index - selectedIndex)
+        var transform3d = CATransform3DIdentity;
+        transform3d.m34 = -1/max(itemSize.width, itemSize.height)
         
-        return -itemOffset
-    }
-    
-    
-    //MARK: Private helpers
-    
-    func calculatePosition(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGPoint {
-        // Calculate item offset to selected index
-        let itemOffset = CGFloat(index - selectedIndex)
+        transform3d = CATransform3DRotate(transform3d, CGFloat(Angle(degrees: angle).radians), 0, 1, 0)
+        transform3d = CATransform3DTranslate(transform3d, -itemSize.width / 2.0, -itemSize.height / 2.0, 0)
         
-        // Calculate horizontal offset from current index to selected index
-        let scrollOffset = (parentFrame.width / 2) + (itemOffset * itemSize.width) + dragOffset
+        let affineTransform = ProjectionTransform(CGAffineTransform(translationX: itemSize.width / 2.0, y: itemSize.height / 2.0))
         
-        return CGPoint(x: scrollOffset, y: parentFrame.height / 2)
+        return ProjectionTransform(transform3d).concatenating(affineTransform)
     }
 }

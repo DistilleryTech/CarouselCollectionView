@@ -12,6 +12,8 @@
 		922B86EB23FEA2D60095184A /* CarouselFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86EA23FEA2D60095184A /* CarouselFlow.swift */; };
 		922B86ED23FEA3360095184A /* CarouselLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */; };
 		922B86EF23FEA35D0095184A /* BaseCarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86EE23FEA35D0095184A /* BaseCarouselLayout.swift */; };
+		9273C3202417C1700093D2B5 /* GeometryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9273C31F2417C1700093D2B5 /* GeometryAttributes.swift */; };
+		9273C3242417D11A0093D2B5 /* TransformGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9273C3232417D11A0093D2B5 /* TransformGeometryEffect.swift */; };
 		92F17C2023ED985A00C26DF9 /* CarouselCollectionView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F17C1623ED985A00C26DF9 /* CarouselCollectionView.framework */; };
 		92F17C2523ED985A00C26DF9 /* CarouselCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F17C2423ED985A00C26DF9 /* CarouselCollectionViewTests.swift */; };
 		92F17C2723ED985A00C26DF9 /* CarouselCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -34,6 +36,8 @@
 		922B86EA23FEA2D60095184A /* CarouselFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFlow.swift; sourceTree = "<group>"; };
 		922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutBuilder.swift; sourceTree = "<group>"; };
 		922B86EE23FEA35D0095184A /* BaseCarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCarouselLayout.swift; sourceTree = "<group>"; };
+		9273C31F2417C1700093D2B5 /* GeometryAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryAttributes.swift; sourceTree = "<group>"; };
+		9273C3232417D11A0093D2B5 /* TransformGeometryEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformGeometryEffect.swift; sourceTree = "<group>"; };
 		92F17C1623ED985A00C26DF9 /* CarouselCollectionView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CarouselCollectionView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarouselCollectionView.h; sourceTree = "<group>"; };
 		92F17C1A23ED985A00C26DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,12 +69,21 @@
 		922B86E523FE7C550095184A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */,
 				922B86E623FE7C6E0095184A /* CarouselLayout.swift */,
+				922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */,
 				922B86EE23FEA35D0095184A /* BaseCarouselLayout.swift */,
 				922B86E823FE7DB80095184A /* CoverFlowCarouselLayout.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		924B70F1241BB4E50039523C /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				9273C31F2417C1700093D2B5 /* GeometryAttributes.swift */,
+				9273C3232417D11A0093D2B5 /* TransformGeometryEffect.swift */,
+			);
+			path = Geometry;
 			sourceTree = "<group>";
 		};
 		92F17C0C23ED985A00C26DF9 = {
@@ -94,6 +107,7 @@
 		92F17C1823ED985A00C26DF9 /* CarouselCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				924B70F1241BB4E50039523C /* Geometry */,
 				922B86E523FE7C550095184A /* Layout */,
 				92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */,
 				922B86EA23FEA2D60095184A /* CarouselFlow.swift */,
@@ -223,7 +237,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				922B86E723FE7C6E0095184A /* CarouselLayout.swift in Sources */,
+				9273C3202417C1700093D2B5 /* GeometryAttributes.swift in Sources */,
 				922B86ED23FEA3360095184A /* CarouselLayoutBuilder.swift in Sources */,
+				9273C3242417D11A0093D2B5 /* TransformGeometryEffect.swift in Sources */,
 				92F17C3123ED98AD00C26DF9 /* CarouselCollectionView.swift in Sources */,
 				922B86E923FE7DB80095184A /* CoverFlowCarouselLayout.swift in Sources */,
 				922B86EF23FEA35D0095184A /* BaseCarouselLayout.swift in Sources */,

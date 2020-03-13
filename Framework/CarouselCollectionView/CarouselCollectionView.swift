@@ -17,7 +17,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
     @Binding var selectedIndex: Int
     
     // State
-    @State private var dragOffset: CGFloat = 0
+    @State private var dragOffset: CGPoint = .zero
     
     //MARK: Initialization
     
@@ -40,7 +40,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
                         DragGesture()
                             .onChanged { value in
                                 // Update drag offset
-                                self.dragOffset = value.translation.width
+                                self.dragOffset = CGPoint(x: value.translation.width, y: value.translation.height)
                         }
                         .onEnded { value in
                             // Calculate selected index
@@ -53,8 +53,8 @@ public struct CarouselCollectionView<ItemView: View>: View {
                             // Update selected index
                             self.selectedIndex = nextIndex
                             
-                            // Reset current drag amount
-                            self.dragOffset = 0
+                            // Reset current drag offset
+                            self.dragOffset = .zero
                         }
                 )
             }
@@ -65,15 +65,16 @@ public struct CarouselCollectionView<ItemView: View>: View {
     //MARK: Private helpers
     
     func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {
-        let itemFrame = layout.calculateFrame(forItemAtIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: frame)
-        let (rotationAngle, rotationAxis) = layout.rotation3DEffect(forItemAtIndex: index, selectedIndex: selectedIndex, position: CGPoint(x: itemFrame.midX, y: itemFrame.midY), inFrame: frame, dragOffset: dragOffset)
-        let zIndex = layout.zIndex(forItemAtIndex: index, selectedIndex: selectedIndex)
+        let geometry = layout.calculateGeometryAttributes(atIndex: index,
+                                                    selectedIndex: selectedIndex,
+                                                    dragOffset: dragOffset,
+                                                    parentFrame: frame)
         
         return self.items[index]
-            .rotation3DEffect(rotationAngle, axis: rotationAxis)
-            .offset(x: itemFrame.minX, y: itemFrame.minY)
-            .frame(width: itemFrame.size.width, height: itemFrame.size.height)
-            .zIndex(zIndex)
+            .modifier(TransformGeometryEffect(transform: geometry.transform))
+            .offset(x: geometry.frame.minX, y: geometry.frame.minY)
+            .frame(width: geometry.frame.size.width, height: geometry.frame.size.height)
+            .zIndex(geometry.zIndex)
             .onTapGesture {
                 self.selectedIndex = index
         }

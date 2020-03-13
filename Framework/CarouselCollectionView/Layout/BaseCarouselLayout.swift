@@ -17,15 +17,7 @@ class BaseCarouselLayout: CarouselLayout {
         return self
     }
     
-    func calculateFrame(forItemAtIndex index: Int, selectedIndex: Int, dragOffset: CGFloat, parentFrame: CGRect) -> CGRect {
-        return .zero
-    }
-    
-    func rotation3DEffect(forItemAtIndex: Int, selectedIndex: Int, position: CGPoint, inFrame: CGRect, dragOffset: CGFloat) -> (angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat)) {
-        return (angle: .degrees(0), axis: (x: 0, y: 0, z: 0))
-    }
-    
-    func zIndex(forItemAtIndex: Int, selectedIndex: Int) -> Double {
-        return 0
+    func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
+        return GeometryAttributes(frame: .zero, zIndex: 0, transform: ProjectionTransform())
     }
 }
