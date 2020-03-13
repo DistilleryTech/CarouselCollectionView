@@ -1,18 +1,20 @@
 //
-//  CoverFlowCarouselLayout.swift
-//  CoverFlowCarouselLayout
+//  LinearCarouselLayout.swift
+//  CarouselCollectionView
 //
-//  Created by Denis Shalagin on 20.02.2020.
+//  Created by Denis Shalagin on 13.03.2020.
 //  Copyright © 2020 Distillery. All rights reserved.
 //
 
+import UIKit
+
 import SwiftUI
 
-class CoverFlowCarouselLayout: BaseCarouselLayout {
+class LinearCarouselLayout: BaseCarouselLayout {
     //MARK: Constants
     
     private enum Constants {
-        static let rotationAngle: Double = 30
+        static let minimumScaleFactor: CGFloat = 0.8
     }
     
     //MARK: Override
@@ -46,23 +48,6 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     }
     
     func createProjectionTransform(withOffset offset: CGFloat) -> ProjectionTransform {
-        var angle: Double = 0
-        if offset >= itemSize.width {
-            angle = -Constants.rotationAngle
-        } else if offset <= -itemSize.width {
-            angle = Constants.rotationAngle
-        } else {
-            angle = Double(-(offset * CGFloat(Constants.rotationAngle)) / itemSize.width)
-        }
-                        
-        var transform3d = CATransform3DIdentity;
-        transform3d.m34 = -1/max(itemSize.width, itemSize.height)
-        
-        transform3d = CATransform3DRotate(transform3d, CGFloat(Angle(degrees: angle).radians), 0, 1, 0)
-        transform3d = CATransform3DTranslate(transform3d, -itemSize.width / 2.0, -itemSize.height / 2.0, 0)
-        
-        let affineTransform = ProjectionTransform(CGAffineTransform(translationX: itemSize.width / 2.0, y: itemSize.height / 2.0))
-        
-        return ProjectionTransform(transform3d).concatenating(affineTransform)
+        return ProjectionTransform()
     }
 }

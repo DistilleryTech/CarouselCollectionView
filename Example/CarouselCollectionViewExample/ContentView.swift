@@ -27,7 +27,7 @@ struct ContentView: View {
     //MARK: Initialization
     
     init() {
-        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
+        self.layout = CarouselLayoutBuilder.build(flow: .linear).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
         
         var items = [CarouselItemView]()
         for index in 0..<100 {

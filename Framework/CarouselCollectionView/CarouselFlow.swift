@@ -8,4 +8,5 @@
 
 public enum CarouselFlow {
     case coverFlow
+    case linear
 }

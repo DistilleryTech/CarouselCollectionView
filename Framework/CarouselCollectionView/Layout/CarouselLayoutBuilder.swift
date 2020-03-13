@@ -13,6 +13,8 @@ public struct CarouselLayoutBuilder {
         switch flow {
         case .coverFlow:
             layout = CoverFlowCarouselLayout()
+        case .linear:
+            layout = LinearCarouselLayout()
         }
         
         return layout
