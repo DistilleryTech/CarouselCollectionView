@@ -71,6 +71,7 @@
 		922B86E523FE7C550095184A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				922B86EA23FEA2D60095184A /* CarouselFlow.swift */,
 				922B86E623FE7C6E0095184A /* CarouselLayout.swift */,
 				922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */,
 				922B86EE23FEA35D0095184A /* BaseCarouselLayout.swift */,
@@ -113,7 +114,6 @@
 				924B70F1241BB4E50039523C /* Geometry */,
 				922B86E523FE7C550095184A /* Layout */,
 				92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */,
-				922B86EA23FEA2D60095184A /* CarouselFlow.swift */,
 				92F17C3023ED98AD00C26DF9 /* CarouselCollectionView.swift */,
 				92F17C1A23ED985A00C26DF9 /* Info.plist */,
 			);

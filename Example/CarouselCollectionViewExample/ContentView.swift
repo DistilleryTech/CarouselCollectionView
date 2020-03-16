@@ -10,6 +10,7 @@ import SwiftUI
 import CarouselCollectionView
 
 struct ContentView: View {
+    
     //MARK: Constants
     
     private enum Constants {
@@ -21,7 +22,6 @@ struct ContentView: View {
     let layout: CarouselLayout
     let items: [CarouselItemView]
     
-    // State
     @State var selectedIndex = 0
     
     //MARK: Initialization

@@ -9,6 +9,7 @@
 import SwiftUI
 
 class CoverFlowCarouselLayout: BaseCarouselLayout {
+    
     //MARK: Constants
     
     private enum Constants {
@@ -24,7 +25,7 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
         // calculate zindex
         let zIndex: Double = 100 - Double(abs(index - selectedIndex))
         
-        // calculate transform
+        // calculate transformation
         let itemOffset = frame.midX - parentFrame.midX
         let transform = createProjectionTransform(withOffset: itemOffset)
         
@@ -35,17 +36,20 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     //MARK: Private
     
     func calculateFrame(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> CGRect {
+        // calculate item offset from selected index
         let itemOffset = index - selectedIndex
         
-        let scrollOffset = (parentFrame.width / 2) + (CGFloat(itemOffset) * itemSize.width) + dragOffset.x
+        // calculate horizontal offset from the parent frame center
+        let offset = (parentFrame.width / 2) + (CGFloat(itemOffset) * itemSize.width) + dragOffset.x
         
-        return CGRect(x: scrollOffset - itemSize.width / 2,
+        return CGRect(x: offset - itemSize.width / 2,
                       y: parentFrame.height / 2 - itemSize.height / 2,
                       width: itemSize.width,
                       height: itemSize.height)
     }
     
     func createProjectionTransform(withOffset offset: CGFloat) -> ProjectionTransform {
+        // calculate item angle
         var angle: Double = 0
         if offset >= itemSize.width {
             angle = -Constants.rotationAngle
@@ -55,6 +59,7 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
             angle = Double(-(offset * CGFloat(Constants.rotationAngle)) / itemSize.width)
         }
                         
+        // create transformation
         var transform3d = CATransform3DIdentity;
         transform3d.m34 = -1/max(itemSize.width, itemSize.height)
         

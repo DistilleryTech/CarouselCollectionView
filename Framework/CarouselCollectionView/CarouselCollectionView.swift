@@ -9,6 +9,17 @@
 import SwiftUI
 
 public struct CarouselCollectionView<ItemView: View>: View {
+    
+    //MARK: Constants
+    
+    private enum Constants {
+        static var animationDuration: Double {
+            return 0.5
+        }
+    }
+    
+    //MARK: Properties
+    
     // Data
     let items: [ItemView]
     let layout: CarouselLayout
@@ -35,7 +46,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
             GeometryReader { geometry in
                 ForEach(0..<self.items.count) { index in
                     self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
-                }.animation(.easeInOut(duration: 0.5))
+                }.animation(.easeInOut(duration: Constants.animationDuration))
                     .gesture(
                         DragGesture()
                             .onChanged { value in
@@ -66,9 +77,9 @@ public struct CarouselCollectionView<ItemView: View>: View {
     
     func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {
         let geometry = layout.calculateGeometryAttributes(atIndex: index,
-                                                    selectedIndex: selectedIndex,
-                                                    dragOffset: dragOffset,
-                                                    parentFrame: frame)
+                                                          selectedIndex: selectedIndex,
+                                                          dragOffset: dragOffset,
+                                                          parentFrame: frame)
         
         return self.items[index]
             .modifier(TransformGeometryEffect(transform: geometry.transform))
