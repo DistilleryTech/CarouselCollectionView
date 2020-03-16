@@ -48,6 +48,20 @@ class LinearCarouselLayout: BaseCarouselLayout {
     }
     
     func createProjectionTransform(withOffset offset: CGFloat) -> ProjectionTransform {
-        return ProjectionTransform()
+        var scale = Constants.minimumScaleFactor
+        
+        if offset == 0 {
+            scale = 1
+        } else if abs(offset) < itemSize.width {
+            scale = 1 - (1 - Constants.minimumScaleFactor) / itemSize.width * abs(offset)
+        }
+        
+        var transform3d = CATransform3DIdentity;
+        
+        transform3d = CATransform3DTranslate(transform3d, itemSize.width / 2, itemSize.height / 2, 0);
+        transform3d = CATransform3DScale(transform3d, scale, scale, 1);
+        transform3d = CATransform3DTranslate(transform3d, -itemSize.width / 2, -itemSize.height / 2, 0);
+        
+        return ProjectionTransform(transform3d)
     }
 }
