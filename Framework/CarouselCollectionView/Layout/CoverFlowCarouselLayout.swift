@@ -14,7 +14,7 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     
     private enum Constants {
         static let rotationAngle: Double = 30
-        static let minimumOpacity: Double = 0.2
+        static let minimumOpacity: Double = 0.5
     }
     
     //MARK: Override

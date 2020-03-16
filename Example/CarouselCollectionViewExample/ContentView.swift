@@ -22,16 +22,28 @@ struct ContentView: View {
     let layout: CarouselLayout
     let items: [CarouselItemView]
     
+    let images = ["Image_1",
+                  "Image_2",
+                  "Image_3",
+                  "Image_4",
+                  "Image_5",
+                  "Image_6",
+                  "Image_7",
+                  "Image_8",
+                  "Image_9",
+                  "Image_10"
+    ]
+    
     @State var selectedIndex = 0
     
     //MARK: Initialization
     
     init() {
-        self.layout = CarouselLayoutBuilder.build(flow: .linear).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
+        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
         
         var items = [CarouselItemView]()
-        for index in 1...10 {
-            items.append(CarouselItemView(imageName: "\(index)"))
+        for image in images {
+            items.append(CarouselItemView(imageName: image))
         }
         self.items = items
     }
@@ -39,14 +51,18 @@ struct ContentView: View {
     //MARK: View
     
     var body: some View {
-        VStack {
-            CarouselCollectionView(layout: layout, items: items, selectedIndex: $selectedIndex)
-            Text("Selected Item:")
-            Text(String(selectedIndex))
-                .font(.system(size: 36, weight: .heavy, design: .default))
-        }
-        .background(Color.black)
-        .edgesIgnoringSafeArea(.all)
+        GeometryReader { geometry in
+            VStack(spacing: 50) {
+                Spacer()
+                CarouselCollectionView(layout: self.layout, items: self.items, selectedIndex: self.$selectedIndex)
+                    .frame(width: geometry.frame(in: .global).width, height: Constants.itemSize.height)
+                Text(self.images[self.selectedIndex])
+                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .foregroundColor(Color.white)
+                Spacer()
+            }
+            .background(Color.black)
+        }.edgesIgnoringSafeArea(.all)
     }
 }
 
