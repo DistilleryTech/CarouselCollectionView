@@ -9,15 +9,9 @@
 import SwiftUI
 
 public struct CarouselItemView : View {
-    var title: String
-    var color: UIColor
+    var imageName: String
     
     public var body: some View {
-        GeometryReader { geometry in
-            Text(self.title)
-                .font(Font.system(.largeTitle))
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .background(Color.init(self.color))
-        }
+        Image(imageName).resizable()
     }
 }

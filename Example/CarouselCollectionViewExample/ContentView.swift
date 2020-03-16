@@ -14,7 +14,7 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemSize = CGSize(width: 175, height: 200)
+        static let itemSize = CGSize(width: 266, height: 200)
     }
     
     //MARK: Properties
@@ -30,8 +30,8 @@ struct ContentView: View {
         self.layout = CarouselLayoutBuilder.build(flow: .linear).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
         
         var items = [CarouselItemView]()
-        for index in 0..<100 {
-            items.append(CarouselItemView(title: "\(index)", color: UIColor.randomColor))
+        for index in 1...10 {
+            items.append(CarouselItemView(imageName: "\(index)"))
         }
         self.items = items
     }
@@ -40,11 +40,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            CarouselCollectionView(layout: layout, items: items, selectedIndex: $selectedIndex)
             Text("Selected Item:")
             Text(String(selectedIndex))
                 .font(.system(size: 36, weight: .heavy, design: .default))
-            CarouselCollectionView(layout: layout, items: items, selectedIndex: $selectedIndex)
         }
+        .background(Color.black)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

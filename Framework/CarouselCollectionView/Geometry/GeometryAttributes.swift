@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct GeometryAttributes {
     var frame: CGRect
+    var opacity: Double
     var zIndex: Double
     var transform: ProjectionTransform
 }

@@ -15,6 +15,7 @@ class LinearCarouselLayout: BaseCarouselLayout {
     
     private enum Constants {
         static let minimumScaleFactor: CGFloat = 0.8
+        static let minimumOpacity: Double = 0.5
     }
     
     //MARK: Override
@@ -22,15 +23,20 @@ class LinearCarouselLayout: BaseCarouselLayout {
     override func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
         // calculate frame
         let frame: CGRect = calculateFrame(atIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
-        
+                
         // calculate zindex
         let zIndex: Double = 100 - Double(abs(index - selectedIndex))
         
-        // calculate transformation
+        
         let itemOffset = frame.midX - parentFrame.midX
+        
+        // calculate opacity
+        let opacity: Double = calculateOpacity(withOffset: itemOffset)
+        
+        // calculate transformation
         let transform = createProjectionTransform(withOffset: itemOffset)
         
-        return GeometryAttributes(frame: frame, zIndex: zIndex, transform: transform)
+        return GeometryAttributes(frame: frame, opacity: opacity, zIndex: zIndex, transform: transform)
     }
     
     
@@ -47,6 +53,18 @@ class LinearCarouselLayout: BaseCarouselLayout {
                       y: parentFrame.height / 2 - itemSize.height / 2,
                       width: itemSize.width,
                       height: itemSize.height)
+    }
+    
+    func calculateOpacity(withOffset offset: CGFloat) -> Double {
+        var opacity = Constants.minimumOpacity
+        
+        if offset == 0 {
+            opacity = 1
+        } else if abs(offset) < itemSize.width {
+            opacity = 1 - ((1 - Constants.minimumOpacity) / Double(itemSize.width)) * Double(abs(offset))
+        }
+                
+        return opacity
     }
     
     func createProjectionTransform(withOffset offset: CGFloat) -> ProjectionTransform {

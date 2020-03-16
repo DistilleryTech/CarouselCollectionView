@@ -85,6 +85,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
             .modifier(TransformGeometryEffect(transform: geometry.transform))
             .offset(x: geometry.frame.minX, y: geometry.frame.minY)
             .frame(width: geometry.frame.size.width, height: geometry.frame.size.height)
+            .opacity(geometry.opacity)
             .zIndex(geometry.zIndex)
             .onTapGesture {
                 self.selectedIndex = index

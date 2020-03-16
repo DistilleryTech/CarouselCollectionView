@@ -18,6 +18,6 @@ open class BaseCarouselLayout: CarouselLayout {
     }
     
     public func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
-        return GeometryAttributes(frame: .zero, zIndex: 0, transform: ProjectionTransform())
+        return GeometryAttributes(frame: .zero, opacity: 1.0, zIndex: 0, transform: ProjectionTransform())
     }
 }
