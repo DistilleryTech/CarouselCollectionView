@@ -86,7 +86,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
             .offset(x: geometry.frame.minX, y: geometry.frame.minY)
             .frame(width: geometry.frame.size.width, height: geometry.frame.size.height)
             .opacity(geometry.opacity)
-            .zIndex(geometry.zIndex)
+//            .zIndex(geometry.zIndex) // foreach on gesture doesn't work with this line, needs to be checked with new iOS beta
             .onTapGesture {
                 self.selectedIndex = index
         }

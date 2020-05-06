@@ -19,7 +19,9 @@ struct ContentView: View {
     
     //MARK: Properties
     
-    let layout: CarouselLayout
+    var layout: CarouselLayout {
+        return CarouselLayoutBuilder.build(flow: CarouselFlow(rawValue: self.selectedStyle)!).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
+    }
     let items: [CarouselItemView]
     
     let images = ["Image_1",
@@ -35,12 +37,11 @@ struct ContentView: View {
     ]
     
     @State var selectedIndex = 0
+    @State var selectedStyle = 0
     
     //MARK: Initialization
     
     init() {
-        self.layout = CarouselLayoutBuilder.build(flow: .coverFlow).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
-        
         var items = [CarouselItemView]()
         for image in images {
             items.append(CarouselItemView(imageName: image))
@@ -58,10 +59,14 @@ struct ContentView: View {
                     .frame(width: geometry.frame(in: .global).width, height: Constants.itemSize.height)
                 Text(self.images[self.selectedIndex])
                     .font(.system(size: 24, weight: .bold, design: .default))
-                    .foregroundColor(Color.white)
                 Spacer()
+                Picker("Select carousel style", selection: self.$selectedStyle) {
+                    ForEach(0 ..< CarouselFlow.titles.count) {
+                        Text(CarouselFlow.titles[$0])
+                    }
+                }
+                .labelsHidden()
             }
-            .background(Color.black)
         }.edgesIgnoringSafeArea(.all)
     }
 }
