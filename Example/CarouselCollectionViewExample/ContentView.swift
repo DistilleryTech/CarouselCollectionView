@@ -14,27 +14,19 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemSize = CGSize(width: 266, height: 200)
+        static let itemCount = 1000
     }
     
     //MARK: Properties
     
+    var itemSize: CGSize {
+        return .init(width: UIScreen.main.bounds.size.width / 1.5, height: UIScreen.main.bounds.size.width / 1.5)
+    }
+    
     var layout: CarouselLayout {
-        return CarouselLayoutBuilder.build(flow: CarouselFlow(rawValue: self.selectedStyle)!).itemSize(width: Constants.itemSize.width, height: Constants.itemSize.height)
+        return CarouselLayoutBuilder.build(flow: CarouselFlow(rawValue: self.selectedStyle)!).itemSize(width: itemSize.width, height: itemSize.height)
     }
     let items: [CarouselItemView]
-    
-    let images = ["Image_1",
-                  "Image_2",
-                  "Image_3",
-                  "Image_4",
-                  "Image_5",
-                  "Image_6",
-                  "Image_7",
-                  "Image_8",
-                  "Image_9",
-                  "Image_10"
-    ]
     
     @State var selectedIndex = 0
     @State var selectedStyle = 0
@@ -42,9 +34,10 @@ struct ContentView: View {
     //MARK: Initialization
     
     init() {
+        // Setup items
         var items = [CarouselItemView]()
-        for image in images {
-            items.append(CarouselItemView(imageName: image))
+        (1...Constants.itemCount).forEach { (index) in
+            items.append(CarouselItemView(index: index))
         }
         self.items = items
     }
@@ -56,9 +49,7 @@ struct ContentView: View {
             VStack(spacing: 50) {
                 Spacer()
                 CarouselCollectionView(layout: self.layout, items: self.items, selectedIndex: self.$selectedIndex)
-                    .frame(width: geometry.frame(in: .global).width, height: Constants.itemSize.height)
-                Text(self.images[self.selectedIndex])
-                    .font(.system(size: 24, weight: .bold, design: .default))
+                    .frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
                 Spacer()
                 Picker("Select carousel style", selection: self.$selectedStyle) {
                     ForEach(0 ..< CarouselFlow.titles.count) {

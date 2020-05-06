@@ -9,9 +9,11 @@
 import SwiftUI
 
 public struct CarouselItemView : View {
-    var imageName: String
+    var index: Int
     
     public var body: some View {
-        Image(imageName).resizable()
+        GeometryReader { geometry in
+            RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 2, endRadius: geometry.frame(in: .global).width)
+        }
     }
 }
