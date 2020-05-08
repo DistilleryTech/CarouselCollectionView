@@ -44,7 +44,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
     public var body: some View {
         ZStack{
             GeometryReader { geometry in
-                ForEach(self.calculateVisibleItems(), id: \.self) { index in
+                ForEach(self.layout.calculateVisibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
                     self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
                 }.animation(.easeInOut(duration: Constants.animationDuration))
                     .gesture(
@@ -55,7 +55,7 @@ public struct CarouselCollectionView<ItemView: View>: View {
                         }
                         .onEnded { value in
                             // Calculate selected index
-                            var nextIndex = self.selectedIndex - Int(value.predictedEndTranslation.width / self.layout.itemSize.width)
+                            var nextIndex = self.selectedIndex - Int(value.predictedEndTranslation.width / self.layout.itemSize.width * 0.5)
                             
                             // Check and fix if it is out of bounds
                             nextIndex = max(nextIndex, 0)

@@ -17,6 +17,10 @@ open class BaseCarouselLayout: CarouselLayout {
         return self
     }
     
+    public func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
+        return 0..<1
+    }
+    
     public func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
         return GeometryAttributes(frame: .zero, opacity: 1.0, zIndex: 0, transform: ProjectionTransform())
     }

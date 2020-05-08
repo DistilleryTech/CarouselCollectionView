@@ -16,5 +16,6 @@ public protocol CarouselLayout {
     func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout
     
     // Layout methods
+    func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int>
     func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes
 }

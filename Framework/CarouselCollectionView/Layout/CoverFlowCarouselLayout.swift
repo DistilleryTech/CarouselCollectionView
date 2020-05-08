@@ -19,6 +19,14 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
     
     //MARK: Override
     
+    override func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
+        let visibleOffset = 20
+        let startIndex = max(0, selectedIndex - visibleOffset / 2)
+        let endIndex = startIndex + visibleOffset
+        
+        return startIndex..<endIndex
+    }
+    
     override func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
         // calculate frame
         let frame: CGRect = calculateFrame(atIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
