@@ -14,7 +14,7 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemCount = 1000
+        static let itemCount = 100000
     }
     
     //MARK: Properties

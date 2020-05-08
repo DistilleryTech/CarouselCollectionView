@@ -13,7 +13,10 @@ public struct CarouselItemView : View {
     
     public var body: some View {
         GeometryReader { geometry in
-            RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 2, endRadius: geometry.frame(in: .global).width)
+            ZStack {
+                RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 2, endRadius: geometry.frame(in: .global).width)
+                Text("\(self.index)").font(.system(size: 96)).fontWeight(.medium).foregroundColor(.white).opacity(0.25)
+            }
         }
     }
 }
