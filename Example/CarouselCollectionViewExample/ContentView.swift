@@ -26,7 +26,10 @@ struct ContentView: View {
     }
     
     var layout: CarouselLayout {
-        return CarouselLayoutBuilder.build(flow: self.selectedCarouselFlow.value).itemSize(width: itemSize.width, height: itemSize.height)
+        var layout = CarouselLayoutBuilder.build(flow: self.selectedCarouselFlow.value)
+        layout.itemSize = itemSize
+        
+        return layout
     }
     
     

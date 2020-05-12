@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9210CFCD23FEA646002080B4 /* CarouselCollectionView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9210CFCA23FEA631002080B4 /* CarouselCollectionView.framework */; };
-		9210CFCE23FEA646002080B4 /* CarouselCollectionView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9210CFCA23FEA631002080B4 /* CarouselCollectionView.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9210CFCE23FEA646002080B4 /* CarouselCollectionView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9210CFCA23FEA631002080B4 /* CarouselCollectionView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		92706A34246ACDC9002A3C2F /* CarouselFlowPickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92706A33246ACDC9002A3C2F /* CarouselFlowPickerItem.swift */; };
 		928D543323FD72A900E79B03 /* CarouselItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928D543223FD72A900E79B03 /* CarouselItemView.swift */; };
 		92F17C6C23EDA4D100C26DF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F17C6B23EDA4D100C26DF9 /* AppDelegate.swift */; };
@@ -162,7 +162,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = Distillery;
 				TargetAttributes = {
 					92F17C6723EDA4D100C26DF9 = {

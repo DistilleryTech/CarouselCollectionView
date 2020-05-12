@@ -51,7 +51,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     public var body: some View {
         ZStack{
             GeometryReader { geometry in
-                ForEach(self.layout.calculateVisibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
+                ForEach(self.layout.visibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
                     self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
                 }.animation(.easeInOut(duration: Constants.animationDuration))
                     .gesture(

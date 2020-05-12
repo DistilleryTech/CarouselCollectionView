@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class CoverFlowCarouselLayout: BaseCarouselLayout {
+struct CoverFlowCarouselLayout: CarouselLayout {
     
     //MARK: Constants
     
@@ -17,9 +17,14 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
         static let minimumOpacity: Double = 0.5
     }
     
+    //MARK: Properties
+    
+    var itemSize: CGSize = .zero
+    
+    
     //MARK: Override
     
-    override func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
+    func visibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
         let visibleOffset = 20
         let startIndex = max(0, selectedIndex - visibleOffset / 2)
         let endIndex = startIndex + visibleOffset
@@ -27,7 +32,7 @@ class CoverFlowCarouselLayout: BaseCarouselLayout {
         return startIndex..<endIndex
     }
     
-    override func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
+    func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
         // calculate frame
         let frame: CGRect = calculateFrame(atIndex: index, selectedIndex: selectedIndex, dragOffset: dragOffset, parentFrame: parentFrame)
         

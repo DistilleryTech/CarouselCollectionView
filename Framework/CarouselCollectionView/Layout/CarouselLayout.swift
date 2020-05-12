@@ -10,12 +10,9 @@ import SwiftUI
 
 public protocol CarouselLayout {
     // Configuration
-    var itemSize: CGSize { get }
-    
-    // Builder functions
-    func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout
-    
+    var itemSize: CGSize { get set }
+
     // Layout methods
-    func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int>
+    func visibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int>
     func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes
 }
