@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-open class BaseCarouselLayout: CarouselLayout {
+public class BaseCarouselLayout: CarouselLayout {
     public var itemSize: CGSize = .zero
-    
+        
     public func itemSize(width: CGFloat, height: CGFloat) -> CarouselLayout {
         itemSize = CGSize(width: width, height: height)
         
@@ -18,10 +18,10 @@ open class BaseCarouselLayout: CarouselLayout {
     }
     
     public func calculateVisibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
-        return 0..<1
+        fatalError(#function + " must be overridden")
     }
     
     public func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
-        return GeometryAttributes(frame: .zero, opacity: 1.0, zIndex: 0, transform: ProjectionTransform())
+        fatalError(#function + " must be overridden")
     }
 }
