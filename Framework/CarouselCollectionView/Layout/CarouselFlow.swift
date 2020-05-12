@@ -6,13 +6,7 @@
 //  Copyright © 2020 Distillery. All rights reserved.
 //
 
-public enum CarouselFlow: Int {
+public enum CarouselFlow {
     case coverFlow
     case linear
-    
-    public static var titles: [String] {
-        get {
-            return ["Cover Flow", "Linear"]
-        }
-    }
 }

@@ -39,7 +39,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     
     //MARK: Initialization
     
-    public init(dataSource: T, layout: CarouselLayout, selectedIndex: Binding<Int>) {
+    public init(layout: CarouselLayout, dataSource: T, selectedIndex: Binding<Int>) {
         self.layout = layout
         self.dataSource = dataSource
         

@@ -15,6 +15,8 @@ struct ContentView: View {
     
     private enum Constants {
         static let itemsCount = 100000
+        static let flowPickerItems = [CarouselFlowPickerItem(title: "Cover Flow", value: .coverFlow),
+                                      CarouselFlowPickerItem(title: "Linear", value: .linear)]
     }
     
     //MARK: Properties
@@ -24,11 +26,15 @@ struct ContentView: View {
     }
     
     var layout: CarouselLayout {
-        return CarouselLayoutBuilder.build(flow: CarouselFlow(rawValue: self.selectedStyle)!).itemSize(width: itemSize.width, height: itemSize.height)
+        return CarouselLayoutBuilder.build(flow: self.selectedCarouselFlow.value).itemSize(width: itemSize.width, height: itemSize.height)
     }
     
+    
+    //MARK: State
+    
     @State var selectedIndex = 0
-    @State var selectedStyle = 0
+    @State var selectedCarouselFlow: CarouselFlowPickerItem = Constants.flowPickerItems[0]
+    
     
     //MARK: View
     
@@ -36,11 +42,11 @@ struct ContentView: View {
         GeometryReader { geometry in
             VStack(spacing: 50) {
                 Spacer()
-                CarouselCollectionView(dataSource: self, layout: self.layout, selectedIndex: self.$selectedIndex).frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
+                CarouselCollectionView(layout: self.layout, dataSource: self, selectedIndex: self.$selectedIndex).frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
                 Spacer()
-                Picker("Select carousel style", selection: self.$selectedStyle) {
-                    ForEach(0 ..< CarouselFlow.titles.count) {
-                        Text(CarouselFlow.titles[$0])
+                Picker("Select carousel flow style", selection: self.$selectedCarouselFlow) {
+                    ForEach(Constants.flowPickerItems, id: \.self) { item in
+                        Text(item.title)
                     }
                 }
                 .labelsHidden()
@@ -51,7 +57,7 @@ struct ContentView: View {
 
 extension ContentView: CarouselCollectionViewDataSource {
     typealias ItemView = CarouselItemView
-
+    
     func numberOfItems() -> Int {
         return Constants.itemsCount
     }
