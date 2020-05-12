@@ -14,7 +14,7 @@ struct ContentView: View {
     //MARK: Constants
     
     private enum Constants {
-        static let itemCount = 100000
+        static let itemsCount = 100000
     }
     
     //MARK: Properties
@@ -26,21 +26,9 @@ struct ContentView: View {
     var layout: CarouselLayout {
         return CarouselLayoutBuilder.build(flow: CarouselFlow(rawValue: self.selectedStyle)!).itemSize(width: itemSize.width, height: itemSize.height)
     }
-    let items: [CarouselItemView]
     
     @State var selectedIndex = 0
     @State var selectedStyle = 0
-    
-    //MARK: Initialization
-    
-    init() {
-        // Setup items
-        var items = [CarouselItemView]()
-        (1...Constants.itemCount).forEach { (index) in
-            items.append(CarouselItemView(index: index))
-        }
-        self.items = items
-    }
     
     //MARK: View
     
@@ -48,8 +36,7 @@ struct ContentView: View {
         GeometryReader { geometry in
             VStack(spacing: 50) {
                 Spacer()
-                CarouselCollectionView(layout: self.layout, items: self.items, selectedIndex: self.$selectedIndex)
-                    .frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
+                CarouselCollectionView(dataSource: self, layout: self.layout, selectedIndex: self.$selectedIndex).frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
                 Spacer()
                 Picker("Select carousel style", selection: self.$selectedStyle) {
                     ForEach(0 ..< CarouselFlow.titles.count) {
@@ -59,6 +46,18 @@ struct ContentView: View {
                 .labelsHidden()
             }
         }.edgesIgnoringSafeArea(.all)
+    }
+}
+
+extension ContentView: CarouselCollectionViewDataSource {
+    typealias ItemView = CarouselItemView
+
+    func numberOfItems() -> Int {
+        return Constants.itemsCount
+    }
+    
+    func viewForItem(atIndex index: Int) -> CarouselItemView {
+        return CarouselItemView(index: index)
     }
 }
 

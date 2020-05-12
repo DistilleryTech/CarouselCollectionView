@@ -8,7 +8,14 @@
 
 import SwiftUI
 
-public struct CarouselCollectionView<ItemView: View>: View {
+public protocol CarouselCollectionViewDataSource {
+    associatedtype ItemView: View
+    
+    func numberOfItems() -> Int
+    func viewForItem(atIndex: Int) -> ItemView
+}
+
+public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDataSource {
     
     //MARK: Constants
     
@@ -21,8 +28,8 @@ public struct CarouselCollectionView<ItemView: View>: View {
     //MARK: Properties
     
     // Data
-    let items: [ItemView]
     let layout: CarouselLayout
+    let dataSource: T
     
     // Binding
     @Binding var selectedIndex: Int
@@ -32,9 +39,9 @@ public struct CarouselCollectionView<ItemView: View>: View {
     
     //MARK: Initialization
     
-    public init(layout: CarouselLayout, items:[ItemView], selectedIndex: Binding<Int>) {
-        self.items = items
+    public init(dataSource: T, layout: CarouselLayout, selectedIndex: Binding<Int>) {
         self.layout = layout
+        self.dataSource = dataSource
         
         self._selectedIndex = selectedIndex
     }
@@ -58,8 +65,9 @@ public struct CarouselCollectionView<ItemView: View>: View {
                             var nextIndex = self.selectedIndex - Int(value.predictedEndTranslation.width / self.layout.itemSize.width * 0.5)
                             
                             // Check and fix if it is out of bounds
+                            let itemsCount = self.dataSource.numberOfItems()
                             nextIndex = max(nextIndex, 0)
-                            nextIndex = min(nextIndex, self.items.count - 1)
+                            nextIndex = min(nextIndex, itemsCount - 1)
                             
                             // Update selected index
                             self.selectedIndex = nextIndex
@@ -74,27 +82,19 @@ public struct CarouselCollectionView<ItemView: View>: View {
     
     
     //MARK: Private helpers
-    
-    func calculateVisibleItems() -> Range<Int> {
-        let visibleOffset = 20
-        let startIndex = max(0, self.selectedIndex - visibleOffset / 2)
-        let endIndex = startIndex + visibleOffset
         
-        return startIndex..<endIndex
-    }
-    
     func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {        
         let geometry = layout.calculateGeometryAttributes(atIndex: index,
                                                           selectedIndex: selectedIndex,
                                                           dragOffset: dragOffset,
                                                           parentFrame: frame)
-        
-        return self.items[index]
+        let viewItem = self.dataSource.viewForItem(atIndex: index)
+        return viewItem
             .modifier(TransformGeometryEffect(transform: geometry.transform))
             .offset(x: geometry.frame.minX, y: geometry.frame.minY)
             .frame(width: geometry.frame.size.width, height: geometry.frame.size.height)
             .opacity(geometry.opacity)
-//            .zIndex(geometry.zIndex) // foreach on gesture doesn't work with this line, needs to be checked with new iOS beta
+            .zIndex(geometry.zIndex)
             .onTapGesture {
                 self.selectedIndex = index
         }

@@ -94,7 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				92F17C1823ED985A00C26DF9 /* CarouselCollectionView */,
-				92F17C2323ED985A00C26DF9 /* CarouselCollectionViewTests */,
 				92F17C1723ED985A00C26DF9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,6 +115,7 @@
 				92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */,
 				92F17C3023ED98AD00C26DF9 /* CarouselCollectionView.swift */,
 				92F17C1A23ED985A00C26DF9 /* Info.plist */,
+				92F17C2323ED985A00C26DF9 /* CarouselCollectionViewTests */,
 			);
 			path = CarouselCollectionView;
 			sourceTree = "<group>";
