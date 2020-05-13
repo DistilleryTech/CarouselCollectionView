@@ -26,7 +26,7 @@ struct ContentView: View {
     }
     
     var layout: CarouselLayout {
-        var layout = CarouselLayoutBuilder.build(flow: self.selectedCarouselFlow.value)
+        var layout = CarouselLayoutBuilder.build(flow: self.selectedFlow.value)
         layout.itemSize = itemSize
         
         return layout
@@ -36,7 +36,7 @@ struct ContentView: View {
     //MARK: State
     
     @State var selectedIndex = 0
-    @State var selectedCarouselFlow: CarouselFlowPickerItem = Constants.flowPickerItems[0]
+    @State var selectedFlow: CarouselFlowPickerItem = Constants.flowPickerItems[0]
     
     
     //MARK: View
@@ -47,7 +47,7 @@ struct ContentView: View {
                 Spacer()
                 CarouselCollectionView(layout: self.layout, dataSource: self, selectedIndex: self.$selectedIndex).frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
                 Spacer()
-                Picker("Select carousel flow style", selection: self.$selectedCarouselFlow) {
+                Picker("Select carousel flow style", selection: self.$selectedFlow) {
                     ForEach(Constants.flowPickerItems, id: \.self) { item in
                         Text(item.title)
                     }

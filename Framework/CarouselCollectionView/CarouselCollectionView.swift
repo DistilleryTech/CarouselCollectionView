@@ -52,7 +52,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
         ZStack{
             GeometryReader { geometry in
                 ForEach(self.layout.visibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
-                    self.configureItemView(atIndex: index, withFrame: geometry.frame(in: .global))
+                    self.configureView(atIndex: index, inFrame: geometry.frame(in: .global))
                 }.animation(.easeInOut(duration: Constants.animationDuration))
                     .gesture(
                         DragGesture()
@@ -83,7 +83,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     
     //MARK: Private helpers
         
-    func configureItemView(atIndex index:Int, withFrame frame:CGRect) -> some View {        
+    func configureView(atIndex index:Int, inFrame frame:CGRect) -> some View {
         let geometry = layout.calculateGeometryAttributes(atIndex: index,
                                                           selectedIndex: selectedIndex,
                                                           dragOffset: dragOffset,
