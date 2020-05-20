@@ -52,9 +52,8 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
         ZStack{
             GeometryReader { geometry in
                 ForEach(self.layout.visibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
-                    self.configureView(atIndex: index, inFrame: geometry.frame(in: .global))
-                }.animation(.easeInOut(duration: Constants.animationDuration))
-                    .gesture(
+                    self.buildView(atIndex: index, inFrame: geometry.frame(in: .global))
+                }.gesture(
                         DragGesture()
                             .onChanged { value in
                                 // Update drag offset
@@ -83,7 +82,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     
     //MARK: Private helpers
         
-    func configureView(atIndex index:Int, inFrame frame:CGRect) -> some View {
+    private func buildView(atIndex index:Int, inFrame frame:CGRect) -> some View {
         let geometry = layout.calculateGeometryAttributes(atIndex: index,
                                                           selectedIndex: selectedIndex,
                                                           dragOffset: dragOffset,
@@ -96,7 +95,34 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
             .opacity(geometry.opacity)
             .zIndex(geometry.zIndex)
             .onTapGesture {
+                self.scroll(toIndex: index, animated: true)
+        }
+    }
+    
+    private func scroll(toIndex index:Int, animated: Bool) {
+        if animated {
+            let start: CGFloat = 0
+            let end: CGFloat = self.layout.itemSize.width
+            let step: CGFloat = self.layout.itemSize.width / 25
+            let scrollBack = index < selectedIndex
+            
+            var delay: Double = 0
+            
+            for i in stride(from: start, to: end, by: step) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    self.dragOffset = CGPoint(x: scrollBack ? i : -i, y: scrollBack ? i : -i)
+                }
+                
+                delay += 0.01
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 self.selectedIndex = index
+                self.dragOffset = .zero
+            }
+            
+        } else {
+            self.selectedIndex = index
         }
     }
 }
