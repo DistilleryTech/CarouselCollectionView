@@ -8,11 +8,17 @@
 
 import SwiftUI
 
+public enum CarouselLayoutOrientation {
+    case horizontal, vertical
+}
+
 public protocol CarouselLayout {
     // Configuration
     var itemSize: CGSize { get set }
+    var orientation: CarouselLayoutOrientation { get }
+    var infiniteScroll: Bool { get set }
 
     // Layout methods
-    func visibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int>
+    func visibleIndices(selectedIndex: Int, parentFrame: CGRect) -> ClosedRange<Int>
     func calculateGeometryAttributes(atIndex: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes
 }

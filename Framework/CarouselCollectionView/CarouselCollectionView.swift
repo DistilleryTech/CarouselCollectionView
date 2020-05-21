@@ -51,9 +51,10 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     public var body: some View {
         ZStack{
             GeometryReader { geometry in
-                ForEach(self.layout.visibleIndices(inFrame: geometry.frame(in: .global), selectedIndex: self.selectedIndex), id: \.self) { index in
+                ForEach(self.layout.visibleIndices(selectedIndex: self.selectedIndex, parentFrame: geometry.frame(in: .global)), id: \.self) { index in
                     self.buildView(atIndex: index, inFrame: geometry.frame(in: .global))
-                }.gesture(
+                }.animation(.easeOut(duration: Constants.animationDuration))
+                .gesture(
                         DragGesture()
                             .onChanged { value in
                                 // Update drag offset
@@ -100,6 +101,10 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     }
     
     private func scroll(toIndex index:Int, animated: Bool) {
+        if index == selectedIndex {
+            return
+        }
+        
         if animated {
             let start: CGFloat = 0
             let end: CGFloat = self.layout.itemSize.width

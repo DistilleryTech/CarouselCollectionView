@@ -21,15 +21,21 @@ struct CoverFlowCarouselLayout: CarouselLayout {
     
     var itemSize: CGSize = .zero
     
+    var orientation: CarouselLayoutOrientation {
+        return .horizontal
+    }
+    
+    var infiniteScroll: Bool = false
+    
     
     //MARK: Override
     
-    func visibleIndices(inFrame: CGRect, selectedIndex: Int) -> Range<Int> {
-        let visibleOffset = 20
-        let startIndex = max(0, selectedIndex - visibleOffset / 2)
-        let endIndex = startIndex + visibleOffset
+    func visibleIndices(selectedIndex: Int, parentFrame: CGRect) -> ClosedRange<Int> {
+        let itemsPerFrame = Int(ceil(parentFrame.width / itemSize.width))
+        let startIndex = max(0, selectedIndex - itemsPerFrame / 2 - 1)
+        let endIndex = startIndex + itemsPerFrame + 10
         
-        return startIndex..<endIndex
+        return startIndex...endIndex
     }
     
     func calculateGeometryAttributes(atIndex index: Int, selectedIndex: Int, dragOffset: CGPoint, parentFrame: CGRect) -> GeometryAttributes {
