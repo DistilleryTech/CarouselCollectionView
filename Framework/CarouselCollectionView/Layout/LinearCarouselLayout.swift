@@ -30,9 +30,9 @@ struct LinearCarouselLayout: CarouselLayout {
     //MARK: Override
     
     func visibleIndices(selectedIndex: Int, parentFrame: CGRect) -> ClosedRange<Int> {
-        let visibleOffset = 20
-        let startIndex = max(0, selectedIndex - visibleOffset / 2)
-        let endIndex = startIndex + visibleOffset
+        let itemsPerFrame = Int(ceil(parentFrame.width / itemSize.width))
+        let startIndex = max(0, selectedIndex - itemsPerFrame / 2 - 1)
+        let endIndex = startIndex + itemsPerFrame + 10
         
         return startIndex...endIndex
     }

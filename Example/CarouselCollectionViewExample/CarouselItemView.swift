@@ -15,7 +15,7 @@ public struct CarouselItemView : View {
         GeometryReader { geometry in
             ZStack {
                 RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 2, endRadius: geometry.frame(in: .global).width)
-                Text(String(self.index))
+                Text("\(self.index)")
                     .font(.system(size: 96))
                     .fontWeight(.medium)
                     .foregroundColor(.white)
