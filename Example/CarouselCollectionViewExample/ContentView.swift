@@ -54,9 +54,12 @@ struct ContentView: View {
                 }
                 .labelsHidden()
             }
-        }.edgesIgnoringSafeArea(.all)
+        }
     }
 }
+
+
+//MARK: Carousel Data Source
 
 extension ContentView: CarouselCollectionViewDataSource {
     typealias ItemView = CarouselItemView
@@ -69,6 +72,9 @@ extension ContentView: CarouselCollectionViewDataSource {
         return CarouselItemView(index: index)
     }
 }
+
+
+//MARK: Preview
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

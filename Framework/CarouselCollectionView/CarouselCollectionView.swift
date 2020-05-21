@@ -62,13 +62,9 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
                         }
                         .onEnded { value in
                             // Calculate selected index
-                            var nextIndex = self.selectedIndex - Int(value.predictedEndTranslation.width / self.layout.itemSize.width * 0.5)
-                            
-                            // Check and fix if it is out of bounds
-                            let itemsCount = self.dataSource.numberOfItems()
-                            nextIndex = max(nextIndex, 0)
-                            nextIndex = min(nextIndex, itemsCount - 1)
-                            
+                            let scrollItemsNumber = Int(value.predictedEndTranslation.width / self.layout.itemSize.width * 0.5)
+                            let nextIndex = (self.selectedIndex - scrollItemsNumber).clamped(to: 0...self.dataSource.numberOfItems() - 1)
+                        
                             // Update selected index
                             self.selectedIndex = nextIndex
                             

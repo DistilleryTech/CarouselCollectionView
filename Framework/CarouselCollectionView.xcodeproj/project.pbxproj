@@ -11,6 +11,7 @@
 		922B86E923FE7DB80095184A /* CoverFlowCarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86E823FE7DB80095184A /* CoverFlowCarouselLayout.swift */; };
 		922B86EB23FEA2D60095184A /* CarouselFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86EA23FEA2D60095184A /* CarouselFlow.swift */; };
 		922B86ED23FEA3360095184A /* CarouselLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */; };
+		9244266B2476C64D00353685 /* Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244266A2476C64D00353685 /* Clamped.swift */; };
 		9273C3202417C1700093D2B5 /* GeometryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9273C31F2417C1700093D2B5 /* GeometryAttributes.swift */; };
 		9273C3242417D11A0093D2B5 /* TransformGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9273C3232417D11A0093D2B5 /* TransformGeometryEffect.swift */; };
 		9293F23D241BD099008EF4B4 /* LinearCarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9293F23C241BD099008EF4B4 /* LinearCarouselLayout.swift */; };
@@ -35,6 +36,7 @@
 		922B86E823FE7DB80095184A /* CoverFlowCarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverFlowCarouselLayout.swift; sourceTree = "<group>"; };
 		922B86EA23FEA2D60095184A /* CarouselFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFlow.swift; sourceTree = "<group>"; };
 		922B86EC23FEA3360095184A /* CarouselLayoutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutBuilder.swift; sourceTree = "<group>"; };
+		9244266A2476C64D00353685 /* Clamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamped.swift; sourceTree = "<group>"; };
 		9273C31F2417C1700093D2B5 /* GeometryAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryAttributes.swift; sourceTree = "<group>"; };
 		9273C3232417D11A0093D2B5 /* TransformGeometryEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformGeometryEffect.swift; sourceTree = "<group>"; };
 		9293F23C241BD099008EF4B4 /* LinearCarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearCarouselLayout.swift; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		924426692476C62800353685 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9244266A2476C64D00353685 /* Clamped.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		924B70F1241BB4E50039523C /* Geometry */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 		92F17C1823ED985A00C26DF9 /* CarouselCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				924426692476C62800353685 /* Extensions */,
 				924B70F1241BB4E50039523C /* Geometry */,
 				922B86E523FE7C550095184A /* Layout */,
 				92F17C1923ED985A00C26DF9 /* CarouselCollectionView.h */,
@@ -238,6 +249,7 @@
 			files = (
 				9293F23D241BD099008EF4B4 /* LinearCarouselLayout.swift in Sources */,
 				922B86E723FE7C6E0095184A /* CarouselLayout.swift in Sources */,
+				9244266B2476C64D00353685 /* Clamped.swift in Sources */,
 				9273C3202417C1700093D2B5 /* GeometryAttributes.swift in Sources */,
 				922B86ED23FEA3360095184A /* CarouselLayoutBuilder.swift in Sources */,
 				9273C3242417D11A0093D2B5 /* TransformGeometryEffect.swift in Sources */,
