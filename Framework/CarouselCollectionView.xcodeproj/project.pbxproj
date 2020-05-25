@@ -94,13 +94,6 @@
 			path = Geometry;
 			sourceTree = "<group>";
 		};
-		9253FDE6247708A6000EE802 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		92F17C0C23ED985A00C26DF9 = {
 			isa = PBXGroup;
 			children = (
@@ -121,7 +114,6 @@
 		92F17C1823ED985A00C26DF9 /* CarouselCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				9253FDE6247708A6000EE802 /* Constants */,
 				924426692476C62800353685 /* Extensions */,
 				924B70F1241BB4E50039523C /* Geometry */,
 				922B86E523FE7C550095184A /* Layout */,
