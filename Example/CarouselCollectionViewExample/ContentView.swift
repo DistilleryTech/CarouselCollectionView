@@ -45,7 +45,10 @@ struct ContentView: View {
         GeometryReader { geometry in
             VStack(spacing: 50) {
                 Spacer()
-                CarouselCollectionView(layout: self.layout, dataSource: self, selectedIndex: self.$selectedIndex).frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
+                CarouselCollectionView(layout: self.layout,
+                                       dataSource: self,
+                                       selectedIndex: self.$selectedIndex)
+                    .frame(width: geometry.frame(in: .global).width, height: self.itemSize.height)
                 Spacer()
                 Picker("Select carousel flow style", selection: self.$selectedFlow) {
                     ForEach(Constants.flowPickerItems, id: \.self) { item in

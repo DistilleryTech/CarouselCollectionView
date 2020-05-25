@@ -6,6 +6,11 @@
 //  Copyright © 2020 Distillery. All rights reserved.
 //
 
+public enum CarouselFlow {
+    case coverFlow
+    case linear
+}
+
 public struct CarouselLayoutBuilder {
     public static func build(flow: CarouselFlow) -> CarouselLayout {
         var layout: CarouselLayout

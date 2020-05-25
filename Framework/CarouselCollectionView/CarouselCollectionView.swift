@@ -16,15 +16,7 @@ public protocol CarouselCollectionViewDataSource {
 }
 
 public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDataSource {
-    
-    //MARK: Constants
-    
-    private enum Constants {
-        static var animationDuration: Double {
-            return 0.5
-        }
-    }
-    
+
     //MARK: Properties
     
     // Data
@@ -53,23 +45,25 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
             GeometryReader { geometry in
                 ForEach(self.layout.visibleIndices(selectedIndex: self.selectedIndex, parentFrame: geometry.frame(in: .global)), id: \.self) { index in
                     self.buildView(atIndex: index, inFrame: geometry.frame(in: .global))
-                }.animation(.easeOut(duration: Constants.animationDuration))
-                .gesture(
+                }.animation(.easeInOut)
+                    .gesture(
                         DragGesture()
                             .onChanged { value in
                                 // Update drag offset
                                 self.dragOffset = CGPoint(x: value.translation.width, y: value.translation.height)
                         }
                         .onEnded { value in
-                            // Calculate selected index
-                            let scrollItemsNumber = Int(value.predictedEndTranslation.width / self.layout.itemSize.width * 0.5)
+                            // Calculate next selected index
+                            let scrollItemsNumber = Int(ceil(value.predictedEndTranslation.width / (self.layout.itemSize.width * 0.5))).clamped(to: -5...5)
+
                             let nextIndex = (self.selectedIndex - scrollItemsNumber).clamped(to: 0...self.dataSource.numberOfItems() - 1)
-                        
-                            // Update selected index
-                            self.selectedIndex = nextIndex
                             
-                            // Reset current drag offset
-                            self.dragOffset = .zero
+                            if abs(self.selectedIndex - nextIndex) > 1 {
+                                self.scroll(toIndex: nextIndex, animated: true)
+                            } else {
+                                self.selectedIndex = nextIndex
+                                self.dragOffset = .zero
+                            }
                         }
                 )
             }
@@ -78,7 +72,7 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
     
     
     //MARK: Private helpers
-        
+    
     private func buildView(atIndex index:Int, inFrame frame:CGRect) -> some View {
         let geometry = layout.calculateGeometryAttributes(atIndex: index,
                                                           selectedIndex: selectedIndex,
@@ -102,8 +96,9 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
         }
         
         if animated {
+            // Animate scrolling by manual drag offset update
             let start: CGFloat = 0
-            let end: CGFloat = self.layout.itemSize.width
+            let end: CGFloat = self.layout.itemSize.width * CGFloat(abs(selectedIndex - index))
             let step: CGFloat = self.layout.itemSize.width / 25
             let scrollBack = index < selectedIndex
             
@@ -113,15 +108,18 @@ public struct CarouselCollectionView<T>: View where T: CarouselCollectionViewDat
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                     self.dragOffset = CGPoint(x: scrollBack ? i : -i, y: scrollBack ? i : -i)
                 }
-                
-                delay += 0.01
+
+                if (end - i) > abs(self.layout.itemSize.width) {
+                    delay += 0.0025
+                } else {
+                    delay += 0.01
+                }
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 self.selectedIndex = index
                 self.dragOffset = .zero
             }
-            
         } else {
             self.selectedIndex = index
         }

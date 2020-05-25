@@ -30,9 +30,10 @@ struct LinearCarouselLayout: CarouselLayout {
     //MARK: Override
     
     func visibleIndices(selectedIndex: Int, parentFrame: CGRect) -> ClosedRange<Int> {
+        let preparedItemsCount = 10
         let itemsPerFrame = Int(ceil(parentFrame.width / itemSize.width))
-        let startIndex = max(0, selectedIndex - itemsPerFrame / 2 - 5)
-        let endIndex = startIndex + itemsPerFrame + 10
+        let startIndex = max(0, selectedIndex - itemsPerFrame / 2 - preparedItemsCount / 2)
+        let endIndex = startIndex + itemsPerFrame + preparedItemsCount
         
         return startIndex...endIndex
     }
